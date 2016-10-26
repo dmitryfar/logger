@@ -10,12 +10,15 @@ class AutoLoagger {
 			require __DIR__ . '/AutoLoagger.php';
 		}
 	}
-	public static function wrapLoader($composerLoader) {
+	public static function wrapLoader($composerLoader, $propertiesPath = null) {
 		if (null !== self::$loader) {
 			return self::$loader;
 		}
 
 		self::$loader = new AutoLoagger();
+		if ($propertiesPath != null) {
+			LogManager::loadConfiguration($propertiesPath);
+		}
 
 		self::$composerLoader = $composerLoader;
 		self::$composerLoader->unregister();
