@@ -37,7 +37,7 @@ class LogManager {
 		if (self::$LOGGER == null) {
 			self::$LOGGER = self::createLogger( $fullClassName);
 		}
-		self::$LOGGER->trace("get logger fullClassName: $fullClassName");
+		// self::$LOGGER->debug("get logger fullClassName: $fullClassName");
 
 		if ($fullClassName != null) {
 			$logger = null;
