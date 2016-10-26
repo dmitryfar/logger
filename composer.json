@@ -1,0 +1,22 @@
+{
+    "name": "dfar/logger",
+    "description": "Log manager and auto initialyzer $LOGGER for classes.",
+    "keywords": ["logger", "log", "monolog", "logmanager", "manager"],
+    "homepage": "http://github.com/dmitryfar/logger",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Farafonov",
+            "email": "dmitry.farafonov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+		"monolog/monolog": "1.*",
+		"dfar/props": "1.*"
+    },
+    "autoload": {
+        "psr-4": {"Logger\\": "src/Logger"}
+    }
+}
