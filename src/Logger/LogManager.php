@@ -34,10 +34,10 @@ class LogManager {
 	 */
 	public static function getLogger($fullClassName = null, $namespace = null) {
 
-		if (self::$LOGGER == null && $fullClassName == "Logger\\LogManager") {
+		if (self::$LOGGER == null) {
 			self::$LOGGER = self::createLogger( $fullClassName);
 		}
-		self::$LOGGER->info("get logger fullClassName: $fullClassName");
+		self::$LOGGER->trace("get logger fullClassName: $fullClassName");
 
 		if ($fullClassName != null) {
 			$logger = null;
