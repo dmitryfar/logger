@@ -105,22 +105,13 @@ class LogConfigurer {
 			});
 
 			if ($handler != null) {
+				// add rootLogger processor if exists
+				$rootLoggerPocessor = $this->properties->getProperty("rootLogger.processor");
+				$this->pushProcessorToHandler($handlerSection, $handler, $rootLoggerPocessor, $class);
+
 				// get processors for log handler
 				$processor = $this->properties->getSection($handlerSection, "logger.$handlerSection.processor");
-				if ($processor != null && $handler instanceof \Monolog\Handler\HandlerInterface) {
-
-					// check if processor class exists
-					$accessorPos = strpos($processor, "::");
-					if ($accessorPos >= 0) {
-						$processorClass = substr($processor, 0, $accessorPos);
-					} else {
-						$processorClass = $processor;
-					}
-					if (class_exists($processorClass, TRUE)) {
-						$processorCallback = new LogConfigurer\LogProcessorCallback($handlerSection, $processor, $class);
-						$handler->pushProcessor($processorCallback);
-					}
-				}
+				$this->pushProcessorToHandler($handlerSection, $handler, $processor, $class);
 
 				// make formatter for handler
 
@@ -139,6 +130,23 @@ class LogConfigurer {
 			}
 		}
 		return $handlers;
+	}
+
+	private function pushProcessorToHandler($handlerSection, $handler, $processor, $class) {
+		if ($processor != null && $handler instanceof \Monolog\Handler\HandlerInterface) {
+
+			// check if processor class exists
+			$accessorPos = strpos($processor, "::");
+			if ($accessorPos >= 0) {
+				$processorClass = substr($processor, 0, $accessorPos);
+			} else {
+				$processorClass = $processor;
+			}
+			if (class_exists($processorClass, TRUE)) {
+				$processorCallback = new LogConfigurer\LogProcessorCallback($handlerSection, $processor, $class);
+				$handler->pushProcessor($processorCallback);
+			}
+		}
 	}
 
 	/**
